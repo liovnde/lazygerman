@@ -88,6 +88,46 @@ export function PracticeApp() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
+        {/* Mode toggle */}
+        <div className="mb-6">
+          <p className="mb-2 px-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            Practice Mode
+          </p>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {MODES.map((m) => {
+              const Icon = m.icon;
+              const active = m.id === mode;
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => selectMode(m.id)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-xl border px-3.5 py-3 text-left transition-all",
+                    active
+                      ? "border-primary/40 bg-primary-soft shadow-sm"
+                      : "border-border bg-card hover:border-primary/30 hover:bg-muted",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
+                      active
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground",
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="leading-tight">
+                    <div className="text-sm font-semibold">{m.label}</div>
+                    <div className="text-xs text-muted-foreground">{m.description}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
           {/* Sidebar / Level selector */}
           <aside className="space-y-4">
