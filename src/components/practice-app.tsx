@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles } from "lucide-react";
+import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles, BookOpen, MessageCircle, GraduationCap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/hooks/use-theme";
-import { sentenceSets, type CEFRLevel } from "@/data/sentences";
+import { modeSets, type CEFRLevel, type PracticeMode } from "@/data/sentences";
 
 const LEVELS: { id: CEFRLevel; label: string }[] = [
   { id: "A1", label: "Beginner" },
@@ -18,24 +18,41 @@ const LEVELS: { id: CEFRLevel; label: string }[] = [
   { id: "C1", label: "Advanced" },
 ];
 
+const MODES: { id: PracticeMode; label: string; icon: typeof BookOpen; description: string }[] = [
+  { id: "translation", label: "Translation", icon: BookOpen, description: "General sentences" },
+  { id: "daily", label: "Daily Conversation", icon: MessageCircle, description: "Everyday phrases" },
+  { id: "exam", label: "Exam Preparation", icon: GraduationCap, description: "Goethe / telc style" },
+];
+
 export function PracticeApp() {
   const { theme, toggle } = useTheme();
+  const [mode, setMode] = useState<PracticeMode>("translation");
   const [level, setLevel] = useState<CEFRLevel>("A1");
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
 
-  const sentences = sentenceSets[level];
+  const sentences = modeSets[mode][level];
   const current = sentences[index];
   const total = sentences.length;
   const progress = useMemo(() => ((index + 1) / total) * 100, [index, total]);
 
-  const selectLevel = (l: CEFRLevel) => {
-    if (l === level) return;
-    setLevel(l);
+  const resetPractice = () => {
     setIndex(0);
     setAnswer("");
     setRevealed(false);
+  };
+
+  const selectLevel = (l: CEFRLevel) => {
+    if (l === level) return;
+    setLevel(l);
+    resetPractice();
+  };
+
+  const selectMode = (m: PracticeMode) => {
+    if (m === mode) return;
+    setMode(m);
+    resetPractice();
   };
 
   const next = () => {
@@ -71,6 +88,46 @@ export function PracticeApp() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
+        {/* Mode toggle */}
+        <div className="mb-6">
+          <p className="mb-2 px-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            Practice Mode
+          </p>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {MODES.map((m) => {
+              const Icon = m.icon;
+              const active = m.id === mode;
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => selectMode(m.id)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-xl border px-3.5 py-3 text-left transition-all",
+                    active
+                      ? "border-primary/40 bg-primary-soft shadow-sm"
+                      : "border-border bg-card hover:border-primary/30 hover:bg-muted",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
+                      active
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground",
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="leading-tight">
+                    <div className="text-sm font-semibold">{m.label}</div>
+                    <div className="text-xs text-muted-foreground">{m.description}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
           {/* Sidebar / Level selector */}
           <aside className="space-y-4">
