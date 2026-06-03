@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles, BookOpen, MessageCircle, GraduationCap } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles, BookOpen, MessageCircle, GraduationCap, Shuffle, Tag } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/hooks/use-theme";
-import { modeSets, type CEFRLevel, type PracticeMode } from "@/data/sentences";
+import { modeSets, pickRandomTopic, type CEFRLevel, type PracticeMode, type Topic } from "@/data/sentences";
 
 const LEVELS: { id: CEFRLevel; label: string }[] = [
   { id: "A1", label: "Beginner" },
