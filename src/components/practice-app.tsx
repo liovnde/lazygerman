@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles, BookOpen, MessageCircle, GraduationCap } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles, BookOpen, MessageCircle, GraduationCap, Shuffle, Tag } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/hooks/use-theme";
-import { modeSets, type CEFRLevel, type PracticeMode } from "@/data/sentences";
+import { modeSets, pickRandomTopic, type CEFRLevel, type PracticeMode, type Topic } from "@/data/sentences";
 
 const LEVELS: { id: CEFRLevel; label: string }[] = [
   { id: "A1", label: "Beginner" },
@@ -28,16 +28,31 @@ export function PracticeApp() {
   const { theme, toggle } = useTheme();
   const [mode, setMode] = useState<PracticeMode>("translation");
   const [level, setLevel] = useState<CEFRLevel>("A1");
+  const [topic, setTopic] = useState<Topic>(() => pickRandomTopic(modeSets["translation"]["A1"]));
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
 
-  const sentences = modeSets[mode][level];
+  // Ensure topic stays valid if mode/level change externally
+  useEffect(() => {
+    const topics = modeSets[mode][level];
+    if (!topics.some((t) => t.id === topic.id)) {
+      setTopic(pickRandomTopic(topics));
+      setIndex(0);
+      setAnswer("");
+      setRevealed(false);
+    }
+  }, [mode, level, topic.id]);
+
+  const sentences = topic.sentences;
   const current = sentences[index];
   const total = sentences.length;
   const progress = useMemo(() => ((index + 1) / total) * 100, [index, total]);
 
-  const resetPractice = () => {
+  const startNewTopic = (nextMode: PracticeMode, nextLevel: CEFRLevel, excludeCurrent = false) => {
+    const topics = modeSets[nextMode][nextLevel];
+    const next = pickRandomTopic(topics, excludeCurrent ? topic.id : undefined);
+    setTopic(next);
     setIndex(0);
     setAnswer("");
     setRevealed(false);
@@ -46,17 +61,24 @@ export function PracticeApp() {
   const selectLevel = (l: CEFRLevel) => {
     if (l === level) return;
     setLevel(l);
-    resetPractice();
+    startNewTopic(mode, l);
   };
 
   const selectMode = (m: PracticeMode) => {
     if (m === mode) return;
     setMode(m);
-    resetPractice();
+    startNewTopic(m, level);
   };
 
+  const shuffleTopic = () => startNewTopic(mode, level, true);
+
   const next = () => {
-    setIndex((i) => (i + 1) % total);
+    if (index + 1 >= total) {
+      // Finished topic → pick a new random topic
+      startNewTopic(mode, level, true);
+      return;
+    }
+    setIndex((i) => i + 1);
     setAnswer("");
     setRevealed(false);
   };
@@ -175,17 +197,32 @@ export function PracticeApp() {
 
           {/* Practice area */}
           <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="secondary" className="rounded-full px-2.5 py-0.5 text-xs">
                   {level}
                 </Badge>
+                <Badge variant="outline" className="rounded-full border-primary/30 bg-primary-soft px-2.5 py-0.5 text-xs font-medium text-accent-foreground">
+                  <Tag className="mr-1 h-3 w-3" />
+                  {topic.title}
+                </Badge>
                 <span className="text-sm text-muted-foreground">
-                  Sentence {index + 1} of {total}
+                  {index + 1} / {total}
                 </span>
               </div>
-              <div className="w-32">
-                <Progress value={progress} className="h-1.5" />
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={shuffleTopic}
+                  className="h-8 rounded-full text-xs"
+                >
+                  <Shuffle className="mr-1.5 h-3.5 w-3.5" />
+                  New topic
+                </Button>
+                <div className="w-24">
+                  <Progress value={progress} className="h-1.5" />
+                </div>
               </div>
             </div>
 
