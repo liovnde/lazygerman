@@ -197,17 +197,32 @@ export function PracticeApp() {
 
           {/* Practice area */}
           <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="secondary" className="rounded-full px-2.5 py-0.5 text-xs">
                   {level}
                 </Badge>
+                <Badge variant="outline" className="rounded-full border-primary/30 bg-primary-soft px-2.5 py-0.5 text-xs font-medium text-accent-foreground">
+                  <Tag className="mr-1 h-3 w-3" />
+                  {topic.title}
+                </Badge>
                 <span className="text-sm text-muted-foreground">
-                  Sentence {index + 1} of {total}
+                  {index + 1} / {total}
                 </span>
               </div>
-              <div className="w-32">
-                <Progress value={progress} className="h-1.5" />
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={shuffleTopic}
+                  className="h-8 rounded-full text-xs"
+                >
+                  <Shuffle className="mr-1.5 h-3.5 w-3.5" />
+                  New topic
+                </Button>
+                <div className="w-24">
+                  <Progress value={progress} className="h-1.5" />
+                </div>
               </div>
             </div>
 
