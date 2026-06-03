@@ -28,16 +28,31 @@ export function PracticeApp() {
   const { theme, toggle } = useTheme();
   const [mode, setMode] = useState<PracticeMode>("translation");
   const [level, setLevel] = useState<CEFRLevel>("A1");
+  const [topic, setTopic] = useState<Topic>(() => pickRandomTopic(modeSets["translation"]["A1"]));
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
 
-  const sentences = modeSets[mode][level];
+  // Ensure topic stays valid if mode/level change externally
+  useEffect(() => {
+    const topics = modeSets[mode][level];
+    if (!topics.some((t) => t.id === topic.id)) {
+      setTopic(pickRandomTopic(topics));
+      setIndex(0);
+      setAnswer("");
+      setRevealed(false);
+    }
+  }, [mode, level, topic.id]);
+
+  const sentences = topic.sentences;
   const current = sentences[index];
   const total = sentences.length;
   const progress = useMemo(() => ((index + 1) / total) * 100, [index, total]);
 
-  const resetPractice = () => {
+  const startNewTopic = (nextMode: PracticeMode, nextLevel: CEFRLevel, excludeCurrent = false) => {
+    const topics = modeSets[nextMode][nextLevel];
+    const next = pickRandomTopic(topics, excludeCurrent ? topic.id : undefined);
+    setTopic(next);
     setIndex(0);
     setAnswer("");
     setRevealed(false);
@@ -46,17 +61,24 @@ export function PracticeApp() {
   const selectLevel = (l: CEFRLevel) => {
     if (l === level) return;
     setLevel(l);
-    resetPractice();
+    startNewTopic(mode, l);
   };
 
   const selectMode = (m: PracticeMode) => {
     if (m === mode) return;
     setMode(m);
-    resetPractice();
+    startNewTopic(m, level);
   };
 
+  const shuffleTopic = () => startNewTopic(mode, level, true);
+
   const next = () => {
-    setIndex((i) => (i + 1) % total);
+    if (index + 1 >= total) {
+      // Finished topic → pick a new random topic
+      startNewTopic(mode, level, true);
+      return;
+    }
+    setIndex((i) => i + 1);
     setAnswer("");
     setRevealed(false);
   };
