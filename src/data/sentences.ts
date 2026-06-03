@@ -1,4 +1,5 @@
 export type CEFRLevel = "A1" | "A2" | "B1" | "B2" | "C1";
+export type PracticeMode = "translation" | "daily" | "exam";
 
 export interface SentenceItem {
   english: string;
@@ -7,12 +8,7 @@ export interface SentenceItem {
   keywords?: string[];
 }
 
-export interface SentenceSet {
-  level: CEFRLevel;
-  sentences: SentenceItem[];
-}
-
-export const sentenceSets: Record<CEFRLevel, SentenceItem[]> = {
+const translation: Record<CEFRLevel, SentenceItem[]> = {
   A1: [
     { english: "I live in Berlin with my sister.", german: "Ich wohne mit meiner Schwester in Berlin.", note: "'wohnen' is used for where you live. Dative after 'mit': meiner Schwester.", keywords: ["wohnen", "Schwester"] },
     { english: "My name is Anna and I am 25 years old.", german: "Ich heiße Anna und ich bin 25 Jahre alt.", note: "'heißen' to state your name; age uses 'sein' + Jahre alt.", keywords: ["heißen", "alt"] },
@@ -74,3 +70,138 @@ export const sentenceSets: Record<CEFRLevel, SentenceItem[]> = {
     { english: "Under no circumstances should confidential information be shared.", german: "Unter keinen Umständen dürfen vertrauliche Informationen weitergegeben werden.", note: "Negative inversion; passive with modal 'dürfen'.", keywords: ["Umstände", "vertraulich"] },
   ],
 };
+
+const daily: Record<CEFRLevel, SentenceItem[]> = {
+  A1: [
+    { english: "Hi, how are you?", german: "Hallo, wie geht's dir?", note: "Informal greeting; 'wie geht's' = wie geht es.", keywords: ["Hallo", "wie geht's"] },
+    { english: "What's your name?", german: "Wie heißt du?", note: "Informal 'du' form of 'heißen'.", keywords: ["heißen"] },
+    { english: "I'm fine, thank you.", german: "Mir geht's gut, danke.", note: "Dative 'mir' with 'gehen' for feelings.", keywords: ["gut", "danke"] },
+    { english: "Where do you come from?", german: "Woher kommst du?", note: "'woher' asks for origin.", keywords: ["woher", "kommen"] },
+    { english: "I come from Spain.", german: "Ich komme aus Spanien.", note: "'aus' + country for origin.", keywords: ["aus", "Spanien"] },
+    { english: "What time is it?", german: "Wie spät ist es?", note: "Common idiomatic time question.", keywords: ["spät", "Uhrzeit"] },
+    { english: "How much does it cost?", german: "Wie viel kostet das?", note: "Basic shopping question.", keywords: ["kosten"] },
+    { english: "The bill, please.", german: "Die Rechnung, bitte.", note: "Standard restaurant phrase.", keywords: ["Rechnung"] },
+    { english: "I'd like a coffee, please.", german: "Ich hätte gern einen Kaffee, bitte.", note: "'hätte gern' = polite ordering.", keywords: ["hätte gern", "Kaffee"] },
+    { english: "See you tomorrow!", german: "Bis morgen!", note: "Common goodbye.", keywords: ["bis morgen"] },
+  ],
+  A2: [
+    { english: "Can we meet at six?", german: "Können wir uns um sechs treffen?", note: "Reflexive 'sich treffen'; 'um' + time.", keywords: ["treffen", "um"] },
+    { english: "Do you want to grab a coffee later?", german: "Hast du Lust, später einen Kaffee zu trinken?", note: "'Lust haben' + zu-infinitive = to feel like.", keywords: ["Lust", "später"] },
+    { english: "Sorry, I'm running late.", german: "Tut mir leid, ich komme zu spät.", note: "'zu spät kommen' = to be late.", keywords: ["leid", "zu spät"] },
+    { english: "How was your weekend?", german: "Wie war dein Wochenende?", note: "Präteritum 'war' commonly used for 'sein'.", keywords: ["Wochenende"] },
+    { english: "I'm just looking, thanks.", german: "Ich schaue mich nur um, danke.", note: "Trennbar 'sich umsehen/umschauen'.", keywords: ["umschauen"] },
+    { english: "Could I have the menu, please?", german: "Könnte ich bitte die Speisekarte haben?", note: "Polite Konjunktiv II 'könnte'.", keywords: ["Speisekarte"] },
+    { english: "How do I get to the station?", german: "Wie komme ich zum Bahnhof?", note: "'zum' = zu dem; asking directions.", keywords: ["Bahnhof"] },
+    { english: "Let's split the bill.", german: "Lass uns getrennt zahlen.", note: "'getrennt zahlen' = pay separately.", keywords: ["getrennt", "zahlen"] },
+    { english: "I'll call you back later.", german: "Ich rufe dich später zurück.", note: "Trennbar 'zurückrufen'.", keywords: ["zurückrufen"] },
+    { english: "Have a nice day!", german: "Schönen Tag noch!", note: "Common parting phrase.", keywords: ["Tag"] },
+  ],
+  B1: [
+    { english: "Could you do me a favor?", german: "Könntest du mir einen Gefallen tun?", note: "'einen Gefallen tun' + dative.", keywords: ["Gefallen"] },
+    { english: "I'm not really in the mood today.", german: "Ich bin heute nicht so in Stimmung.", note: "'in Stimmung sein' = to be in the mood.", keywords: ["Stimmung"] },
+    { english: "Let's grab dinner sometime this week.", german: "Lass uns diese Woche mal zusammen Abendessen.", note: "'mal' softens the suggestion.", keywords: ["Abendessen"] },
+    { english: "I totally forgot about it.", german: "Das habe ich total vergessen.", note: "Colloquial 'total' for emphasis.", keywords: ["vergessen"] },
+    { english: "It depends on the weather.", german: "Das kommt aufs Wetter an.", note: "'ankommen auf' + accusative = to depend on.", keywords: ["ankommen auf"] },
+    { english: "Do you mind if I sit here?", german: "Stört es dich, wenn ich mich hier hinsetze?", note: "Trennbar 'sich hinsetzen'.", keywords: ["stören", "hinsetzen"] },
+    { english: "I'm just kidding.", german: "Das war nur ein Witz.", note: "Common idiom; literally 'that was just a joke'.", keywords: ["Witz"] },
+    { english: "Can you say that again, slowly?", german: "Kannst du das bitte noch mal langsam sagen?", note: "'noch mal' = once more.", keywords: ["langsam"] },
+    { english: "I have to head home now.", german: "Ich muss jetzt nach Hause.", note: "'nach Hause' = (going) home; verb can be implied.", keywords: ["nach Hause"] },
+    { english: "Take care!", german: "Pass auf dich auf!", note: "Trennbar 'aufpassen'; reflexive use.", keywords: ["aufpassen"] },
+  ],
+  B2: [
+    { english: "I'd rather stay in tonight.", german: "Ich würde heute Abend lieber zu Hause bleiben.", note: "'lieber' = preferred; würde-construction.", keywords: ["lieber", "zu Hause"] },
+    { english: "That sounds like a great idea.", german: "Das klingt nach einer tollen Idee.", note: "'klingen nach' + dative.", keywords: ["klingen"] },
+    { english: "Honestly, I don't really care.", german: "Ehrlich gesagt ist mir das ziemlich egal.", note: "'mir ist etwas egal' = I don't care.", keywords: ["egal", "ehrlich"] },
+    { english: "Let's talk it over a coffee.", german: "Lass uns das bei einem Kaffee besprechen.", note: "'besprechen' = to discuss; 'bei' + dative.", keywords: ["besprechen"] },
+    { english: "I'm completely swamped at work.", german: "Ich bin auf der Arbeit völlig im Stress.", note: "'im Stress sein' = to be swamped.", keywords: ["Stress"] },
+    { english: "Don't take it personally.", german: "Nimm es nicht persönlich.", note: "Imperative; 'nehmen' irregular.", keywords: ["persönlich"] },
+    { english: "I owe you one.", german: "Ich schulde dir was.", note: "'schulden' + dative; 'was' = etwas.", keywords: ["schulden"] },
+    { english: "It slipped my mind.", german: "Das ist mir entfallen.", note: "'entfallen' + dative = to slip one's mind.", keywords: ["entfallen"] },
+    { english: "Let's keep in touch.", german: "Lass uns in Kontakt bleiben.", note: "'in Kontakt bleiben' fixed phrase.", keywords: ["Kontakt"] },
+    { english: "I'll think about it and let you know.", german: "Ich denke darüber nach und sage dir Bescheid.", note: "Trennbar 'nachdenken' + 'Bescheid sagen'.", keywords: ["nachdenken", "Bescheid"] },
+  ],
+  C1: [
+    { english: "To be honest, I'd rather not get involved.", german: "Um ehrlich zu sein, würde ich mich da lieber raushalten.", note: "Colloquial 'sich raushalten' = to stay out of.", keywords: ["raushalten"] },
+    { english: "Let's not make a big deal out of it.", german: "Lass uns daraus keine große Sache machen.", note: "'eine große Sache aus etwas machen'.", keywords: ["Sache"] },
+    { english: "I can't quite put my finger on it.", german: "Ich kann es nicht so richtig in Worte fassen.", note: "Idiomatic 'in Worte fassen' = to put into words.", keywords: ["Worte"] },
+    { english: "That's beside the point.", german: "Das gehört nicht zur Sache.", note: "'zur Sache gehören' = to be relevant.", keywords: ["Sache"] },
+    { english: "I take it you weren't informed.", german: "Wie ich annehme, wurdest du nicht informiert.", note: "Parenthetical 'wie ich annehme'.", keywords: ["annehmen"] },
+    { english: "Let's call it a day.", german: "Lass uns für heute Schluss machen.", note: "'Schluss machen' = to wrap up.", keywords: ["Schluss"] },
+    { english: "I had a hunch this would happen.", german: "Ich hatte so eine Ahnung, dass das passieren würde.", note: "'eine Ahnung haben' = to have a hunch.", keywords: ["Ahnung"] },
+    { english: "Let's just agree to disagree.", german: "Einigen wir uns darauf, uns nicht einig zu sein.", note: "Wordplay on 'sich einigen' / 'einig sein'.", keywords: ["einigen"] },
+    { english: "You're reading too much into it.", german: "Du interpretierst da zu viel hinein.", note: "Trennbar 'hineininterpretieren'.", keywords: ["interpretieren"] },
+    { english: "Let's not beat around the bush.", german: "Reden wir nicht um den heißen Brei herum.", note: "Idiom: 'um den heißen Brei herumreden'.", keywords: ["Brei"] },
+  ],
+};
+
+const exam: Record<CEFRLevel, SentenceItem[]> = {
+  A1: [
+    { english: "Please fill out this form.", german: "Bitte füllen Sie dieses Formular aus.", note: "Trennbar 'ausfüllen'; formal 'Sie'.", keywords: ["ausfüllen", "Formular"] },
+    { english: "My address is Hauptstraße 12.", german: "Meine Adresse ist Hauptstraße 12.", note: "Typical Start Deutsch 1 form-filling.", keywords: ["Adresse"] },
+    { english: "I was born on the third of May.", german: "Ich bin am dritten Mai geboren.", note: "Date with ordinal + dative 'am'.", keywords: ["geboren"] },
+    { english: "I would like to register for a course.", german: "Ich möchte mich für einen Kurs anmelden.", note: "Reflexive trennbar 'sich anmelden'.", keywords: ["anmelden", "Kurs"] },
+    { english: "How do you spell your last name?", german: "Wie schreibt man Ihren Nachnamen?", note: "'man' as impersonal subject.", keywords: ["Nachname"] },
+    { english: "The exam starts at nine.", german: "Die Prüfung beginnt um neun.", note: "Standard exam vocabulary.", keywords: ["Prüfung"] },
+    { english: "Please speak more slowly.", german: "Sprechen Sie bitte langsamer.", note: "Formal imperative; comparative 'langsamer'.", keywords: ["langsamer"] },
+    { english: "I don't understand the question.", german: "Ich verstehe die Frage nicht.", note: "Useful exam phrase.", keywords: ["Frage"] },
+    { english: "Can you repeat that, please?", german: "Können Sie das bitte wiederholen?", note: "Formal request.", keywords: ["wiederholen"] },
+    { english: "I work as a nurse.", german: "Ich arbeite als Krankenpfleger.", note: "'als' + profession (no article).", keywords: ["Krankenpfleger"] },
+  ],
+  A2: [
+    { english: "I would like to make an appointment.", german: "Ich möchte einen Termin vereinbaren.", note: "'einen Termin vereinbaren' fixed phrase.", keywords: ["Termin"] },
+    { english: "I am writing to inquire about the course.", german: "Ich schreibe Ihnen, um mich nach dem Kurs zu erkundigen.", note: "'um … zu'; 'sich erkundigen nach'.", keywords: ["erkundigen"] },
+    { english: "Thank you in advance for your reply.", german: "Vielen Dank im Voraus für Ihre Antwort.", note: "Formal email closing.", keywords: ["im Voraus"] },
+    { english: "Unfortunately, I cannot attend the meeting.", german: "Leider kann ich an dem Treffen nicht teilnehmen.", note: "'teilnehmen an' + dative.", keywords: ["teilnehmen"] },
+    { english: "Please find the document attached.", german: "Im Anhang finden Sie das Dokument.", note: "Standard email phrasing.", keywords: ["Anhang"] },
+    { english: "I have a question about the homework.", german: "Ich habe eine Frage zu den Hausaufgaben.", note: "'Frage zu' + dative.", keywords: ["Hausaufgaben"] },
+    { english: "Could you send me more information?", german: "Könnten Sie mir weitere Informationen schicken?", note: "Polite request; comparative 'weitere'.", keywords: ["Informationen"] },
+    { english: "I would like to cancel my reservation.", german: "Ich möchte meine Reservierung stornieren.", note: "'stornieren' commonly used in service contexts.", keywords: ["stornieren"] },
+    { english: "My German is still not very good.", german: "Mein Deutsch ist noch nicht sehr gut.", note: "'noch nicht' = not yet.", keywords: ["noch"] },
+    { english: "I have lived in Germany for one year.", german: "Ich wohne seit einem Jahr in Deutschland.", note: "Present + 'seit' for ongoing duration.", keywords: ["seit"] },
+  ],
+  B1: [
+    { english: "In my opinion, public transport should be free.", german: "Meiner Meinung nach sollte der öffentliche Nahverkehr kostenlos sein.", note: "'meiner Meinung nach' for opinions (Zertifikat B1).", keywords: ["Meinung", "Nahverkehr"] },
+    { english: "On the one hand it is cheaper, on the other hand it takes longer.", german: "Einerseits ist es billiger, andererseits dauert es länger.", note: "'einerseits … andererseits' for balanced arguments.", keywords: ["einerseits"] },
+    { english: "I would like to apply for the position.", german: "Ich möchte mich für die Stelle bewerben.", note: "'sich bewerben für/um' + accusative.", keywords: ["bewerben", "Stelle"] },
+    { english: "I am writing to complain about a defective product.", german: "Ich schreibe Ihnen, um mich über ein defektes Produkt zu beschweren.", note: "'sich beschweren über' + accusative.", keywords: ["beschweren"] },
+    { english: "I look forward to hearing from you.", german: "Ich freue mich auf Ihre Rückmeldung.", note: "Standard formal closing.", keywords: ["Rückmeldung"] },
+    { english: "Could you give me an example?", german: "Könnten Sie mir ein Beispiel geben?", note: "Useful in oral exams.", keywords: ["Beispiel"] },
+    { english: "I disagree with that statement.", german: "Ich stimme dieser Aussage nicht zu.", note: "Trennbar 'zustimmen' + dative.", keywords: ["zustimmen"] },
+    { english: "Let me summarize the main points.", german: "Lassen Sie mich die wichtigsten Punkte zusammenfassen.", note: "'zusammenfassen' = to summarize.", keywords: ["zusammenfassen"] },
+    { english: "What do you think about this topic?", german: "Was halten Sie von diesem Thema?", note: "'halten von' = to think of (opinion).", keywords: ["halten"] },
+    { english: "I would suggest meeting next week.", german: "Ich würde vorschlagen, uns nächste Woche zu treffen.", note: "'vorschlagen' + zu-infinitive.", keywords: ["vorschlagen"] },
+  ],
+  B2: [
+    { english: "The graph shows a significant increase in 2023.", german: "Die Grafik zeigt einen deutlichen Anstieg im Jahr 2023.", note: "Typical Goethe B2 Schreiben phrasing.", keywords: ["Grafik", "Anstieg"] },
+    { english: "There are advantages and disadvantages to consider.", german: "Es gibt sowohl Vor- als auch Nachteile zu berücksichtigen.", note: "'sowohl … als auch'; 'berücksichtigen' = to take into account.", keywords: ["Vorteile", "Nachteile"] },
+    { english: "I am of the opinion that the new regulation is necessary.", german: "Ich bin der Auffassung, dass die neue Regelung notwendig ist.", note: "'der Auffassung sein' = formal opinion phrase.", keywords: ["Auffassung"] },
+    { english: "This issue affects many areas of daily life.", german: "Dieses Thema betrifft viele Bereiche des täglichen Lebens.", note: "'betreffen' = to concern/affect.", keywords: ["betreffen"] },
+    { english: "Studies show that the trend continues.", german: "Studien zeigen, dass sich der Trend fortsetzt.", note: "Reflexive 'sich fortsetzen'.", keywords: ["fortsetzen"] },
+    { english: "It cannot be denied that the situation is complex.", german: "Es lässt sich nicht leugnen, dass die Situation komplex ist.", note: "'sich lassen' as passive alternative.", keywords: ["leugnen"] },
+    { english: "From my perspective, education is the key.", german: "Aus meiner Sicht ist Bildung der Schlüssel.", note: "'aus … Sicht' = from … perspective.", keywords: ["Sicht", "Bildung"] },
+    { english: "All things considered, I support the proposal.", german: "Alles in allem unterstütze ich den Vorschlag.", note: "'alles in allem' = all in all.", keywords: ["unterstützen"] },
+    { english: "It is worth mentioning that costs have risen.", german: "Es ist erwähnenswert, dass die Kosten gestiegen sind.", note: "'-wert' suffix; Perfekt 'gestiegen'.", keywords: ["erwähnenswert"] },
+    { english: "In conclusion, action must be taken now.", german: "Abschließend lässt sich sagen, dass jetzt gehandelt werden muss.", note: "Passive with modal in formal essay.", keywords: ["abschließend"] },
+  ],
+  C1: [
+    { english: "The author argues that globalization has reshaped society.", german: "Der Autor vertritt die These, dass die Globalisierung die Gesellschaft umgestaltet hat.", note: "'eine These vertreten'; trennbar 'umgestalten'.", keywords: ["These", "Globalisierung"] },
+    { english: "This claim is supported by recent empirical evidence.", german: "Diese Behauptung wird durch aktuelle empirische Befunde gestützt.", note: "Passive + 'stützen durch'.", keywords: ["Behauptung", "Befunde"] },
+    { english: "A differentiated analysis is indispensable here.", german: "Eine differenzierte Betrachtung ist hier unerlässlich.", note: "Formal C1 register; 'unerlässlich' = indispensable.", keywords: ["differenziert", "unerlässlich"] },
+    { english: "It should be noted that the data are not conclusive.", german: "Es sei angemerkt, dass die Daten nicht eindeutig sind.", note: "Konjunktiv I 'sei' for academic register.", keywords: ["angemerkt"] },
+    { english: "This raises the question of whether the measures are sufficient.", german: "Dies wirft die Frage auf, ob die Maßnahmen ausreichend sind.", note: "Trennbar 'aufwerfen'.", keywords: ["aufwerfen"] },
+    { english: "Contrary to widespread belief, the trend is reversing.", german: "Entgegen der weit verbreiteten Annahme kehrt sich der Trend um.", note: "'entgegen' + dative; reflexive 'sich umkehren'.", keywords: ["entgegen", "umkehren"] },
+    { english: "The findings must be interpreted with caution.", german: "Die Ergebnisse sind mit Vorsicht zu interpretieren.", note: "'sein + zu + Infinitiv' = passive necessity.", keywords: ["Vorsicht"] },
+    { english: "In light of these developments, a rethink is required.", german: "Angesichts dieser Entwicklungen ist ein Umdenken erforderlich.", note: "'angesichts' + genitive; nominalized 'Umdenken'.", keywords: ["angesichts", "Umdenken"] },
+    { english: "The proposal falls short of expectations.", german: "Der Vorschlag bleibt hinter den Erwartungen zurück.", note: "'hinter etwas zurückbleiben' fixed expression.", keywords: ["zurückbleiben"] },
+    { english: "To sum up, a paradigm shift is overdue.", german: "Zusammenfassend lässt sich feststellen, dass ein Paradigmenwechsel überfällig ist.", note: "Standard C1 conclusion phrase.", keywords: ["Paradigmenwechsel", "überfällig"] },
+  ],
+};
+
+export const modeSets: Record<PracticeMode, Record<CEFRLevel, SentenceItem[]>> = {
+  translation,
+  daily,
+  exam,
+};
+
+// Backwards compat
+export const sentenceSets = translation;

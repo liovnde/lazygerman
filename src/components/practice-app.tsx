@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles } from "lucide-react";
+import { Moon, Sun, Eye, RotateCcw, ArrowRight, Languages, Sparkles, BookOpen, MessageCircle, GraduationCap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/hooks/use-theme";
-import { sentenceSets, type CEFRLevel } from "@/data/sentences";
+import { modeSets, type CEFRLevel, type PracticeMode } from "@/data/sentences";
 
 const LEVELS: { id: CEFRLevel; label: string }[] = [
   { id: "A1", label: "Beginner" },
@@ -18,14 +18,21 @@ const LEVELS: { id: CEFRLevel; label: string }[] = [
   { id: "C1", label: "Advanced" },
 ];
 
+const MODES: { id: PracticeMode; label: string; icon: typeof BookOpen; description: string }[] = [
+  { id: "translation", label: "Translation", icon: BookOpen, description: "General sentences" },
+  { id: "daily", label: "Daily Conversation", icon: MessageCircle, description: "Everyday phrases" },
+  { id: "exam", label: "Exam Preparation", icon: GraduationCap, description: "Goethe / telc style" },
+];
+
 export function PracticeApp() {
   const { theme, toggle } = useTheme();
+  const [mode, setMode] = useState<PracticeMode>("translation");
   const [level, setLevel] = useState<CEFRLevel>("A1");
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
 
-  const sentences = sentenceSets[level];
+  const sentences = modeSets[mode][level];
   const current = sentences[index];
   const total = sentences.length;
   const progress = useMemo(() => ((index + 1) / total) * 100, [index, total]);
