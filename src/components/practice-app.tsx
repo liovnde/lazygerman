@@ -37,12 +37,22 @@ export function PracticeApp() {
   const total = sentences.length;
   const progress = useMemo(() => ((index + 1) / total) * 100, [index, total]);
 
-  const selectLevel = (l: CEFRLevel) => {
-    if (l === level) return;
-    setLevel(l);
+  const resetPractice = () => {
     setIndex(0);
     setAnswer("");
     setRevealed(false);
+  };
+
+  const selectLevel = (l: CEFRLevel) => {
+    if (l === level) return;
+    setLevel(l);
+    resetPractice();
+  };
+
+  const selectMode = (m: PracticeMode) => {
+    if (m === mode) return;
+    setMode(m);
+    resetPractice();
   };
 
   const next = () => {
