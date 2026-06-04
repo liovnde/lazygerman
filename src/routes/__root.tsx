@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Lazy German" },
+      { name: "description", content: "A Website to practice German in a lazy Way" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Lazy German" },
+      { property: "og:description", content: "A Website to practice German in a lazy Way" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Lazy German" },
+      { name: "twitter:description", content: "A Website to practice German in a lazy Way" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f8b4c041-a02b-4b23-8fff-1ea0fce0ad04/id-preview-679602a1--7c60032d-7f0a-4fce-bd73-eb1726d13b0c.lovable.app-1780596832414.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f8b4c041-a02b-4b23-8fff-1ea0fce0ad04/id-preview-679602a1--7c60032d-7f0a-4fce-bd73-eb1726d13b0c.lovable.app-1780596832414.png" },
     ],
     links: [
       {
