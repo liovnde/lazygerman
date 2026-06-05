@@ -86,6 +86,75 @@ const translation: Record<CEFRLevel, Topic[]> = {
         { english: "The class lasts ninety minutes. There is a break in between.", german: "Der Kurs dauert neunzig Minuten. Dazwischen gibt es eine Pause.", note: "'dazwischen' = in between.", keywords: ["Kurs", "Pause"] },
       ],
     },
+
+//NEW SENTENCESSSSSSS//
+    // General - A1 (thêm mới)
+      {
+        id: "t-a1-food",
+        title: "Food & Drinks",
+        sentences: [
+          { english: "I like bread and butter. I eat it every morning.", german: "Ich mag Brot und Butter. Ich esse es jeden Morgen.", note: "'mögen' for likes; 'jeden Morgen' accusative.", keywords: ["mögen", "Brot"] },
+          { english: "The soup is hot. Be careful!", german: "Die Suppe ist heiß. Pass auf!", note: "Imperative 'pass auf' from 'aufpassen'.", keywords: ["Suppe", "aufpassen"] },
+          { english: "I drink orange juice for breakfast. It is very healthy.", german: "Ich trinke Orangensaft zum Frühstück. Er ist sehr gesund.", note: "'zum' = zu dem; 'Er' refers to Saft (masc.).", keywords: ["Orangensaft", "Frühstück"] },
+          { english: "We order pizza. It is delicious.", german: "Wir bestellen eine Pizza. Sie ist lecker.", note: "'bestellen' = to order; 'lecker' = delicious.", keywords: ["bestellen", "lecker"] },
+          { english: "The apple costs fifty cents. I buy two of them.", german: "Der Apfel kostet fünfzig Cent. Ich kaufe zwei davon.", note: "'davon' = of them.", keywords: ["Apfel", "kaufen"] },
+          { english: "I do not eat meat. I am a vegetarian.", german: "Ich esse kein Fleisch. Ich bin Vegetarier.", note: "'kein' negation of noun; profession without article.", keywords: ["Fleisch", "Vegetarier"] },
+          { english: "The coffee is too cold. I would like a new one.", german: "Der Kaffee ist zu kalt. Ich möchte einen neuen.", note: "Accusative 'einen neuen' (masc.); 'zu' = too.", keywords: ["kalt", "möchten"] },
+          { english: "We cook dinner together. It smells good.", german: "Wir kochen zusammen Abendessen. Es riecht gut.", note: "'riechen' = to smell; 'zusammen' = together.", keywords: ["kochen", "riechen"] },
+          { english: "There is no more milk. I have to buy some.", german: "Es gibt keine Milch mehr. Ich muss welche kaufen.", note: "'keine … mehr' = no more; 'welche' as pronoun.", keywords: ["Milch", "welche"] },
+          { english: "The cake tastes very sweet. Do you want a piece?", german: "Der Kuchen schmeckt sehr süß. Möchtest du ein Stück?", note: "'schmecken' = to taste; 'Stück' neuter accusative.", keywords: ["schmecken", "Stück"] },
+        ],
+      },
+      {
+        id: "t-a1-shopping",
+        title: "Shopping & Money",
+        sentences: [
+          { english: "I need new shoes. They should not be too expensive.", german: "Ich brauche neue Schuhe. Sie sollen nicht zu teuer sein.", note: "Modal 'sollen'; plural Schuhe.", keywords: ["Schuhe", "sollen"] },
+          { english: "The jacket costs sixty euros. That is a good price.", german: "Die Jacke kostet sechzig Euro. Das ist ein guter Preis.", note: "Nominative: ein guter Preis.", keywords: ["Jacke", "Preis"] },
+          { english: "I pay by card. I have no cash.", german: "Ich zahle mit Karte. Ich habe kein Bargeld.", note: "'mit' + dative; 'kein' neuter.", keywords: ["zahlen", "Bargeld"] },
+          { english: "The store opens at nine. It closes at eight in the evening.", german: "Das Geschäft öffnet um neun. Es schließt um acht Uhr abends.", note: "'abends' = in the evening (adverb).", keywords: ["Geschäft", "schließen"] },
+          { english: "This is too big for me. Do you have a smaller size?", german: "Das ist zu groß für mich. Haben Sie eine kleinere Größe?", note: "Comparative 'kleinere'; formal 'Sie'.", keywords: ["Größe", "kleiner"] },
+          { english: "I am looking for a gift. It is for my mother.", german: "Ich suche ein Geschenk. Es ist für meine Mutter.", note: "'für' + accusative.", keywords: ["Geschenk", "suchen"] },
+          { english: "The supermarket is near here. You go straight and then left.", german: "Der Supermarkt ist hier in der Nähe. Sie gehen geradeaus und dann links.", note: "Direction words; 'in der Nähe' = nearby.", keywords: ["Supermarkt", "geradeaus"] },
+          { english: "I get five euros change. Thank you.", german: "Ich bekomme fünf Euro Wechselgeld. Danke.", note: "'Wechselgeld' = change (money).", keywords: ["bekomme", "Wechselgeld"] },
+          { english: "The bag is on sale. It is thirty percent cheaper.", german: "Die Tasche ist im Angebot. Sie ist dreißig Prozent günstiger.", note: "'im Angebot' = on sale; comparative 'günstiger'.", keywords: ["Angebot", "günstiger"] },
+          { english: "I would like to return this. I have the receipt.", german: "Ich möchte das zurückgeben. Ich habe den Kassenbon.", note: "Trennbar 'zurückgeben'; 'den Kassenbon' acc. masc.", keywords: ["zurückgeben", "Kassenbon"] },
+        ],
+      },
+      {
+        id: "t-a1-transport",
+        title: "Transport & Getting Around",
+        sentences: [
+          { english: "I take the bus to the city centre. It comes every ten minutes.", german: "Ich nehme den Bus in die Stadtmitte. Er kommt alle zehn Minuten.", note: "Accusative 'den Bus'; 'alle … Minuten' = every … minutes.", keywords: ["Bus", "Stadtmitte"] },
+          { english: "Where is the nearest subway station? I am looking for the exit.", german: "Wo ist die nächste U-Bahn-Station? Ich suche den Ausgang.", note: "Superlative adj. 'nächste'; 'den Ausgang' acc.", keywords: ["U-Bahn", "Ausgang"] },
+          { english: "The train is late today. We have to wait.", german: "Der Zug hat heute Verspätung. Wir müssen warten.", note: "'Verspätung haben' = to be delayed.", keywords: ["Verspätung", "warten"] },
+          { english: "I would like one ticket to Munich, please. One way.", german: "Ich möchte eine Fahrkarte nach München, bitte. Einfach.", note: "'einfach' = one way; 'nach' + city.", keywords: ["Fahrkarte", "München"] },
+          { english: "The taxi is expensive. I prefer to go by bike.", german: "Das Taxi ist teuer. Ich fahre lieber mit dem Fahrrad.", note: "Comparative 'lieber' = prefer to.", keywords: ["Taxi", "lieber"] },
+          { english: "Is this seat free? Can I sit here?", german: "Ist dieser Platz frei? Kann ich mich hier hinsetzen?", note: "Reflexive 'sich hinsetzen'; modal 'können'.", keywords: ["Platz", "hinsetzen"] },
+          { english: "I get off at the next stop. The journey takes twenty minutes.", german: "Ich steige an der nächsten Haltestelle aus. Die Fahrt dauert zwanzig Minuten.", note: "Trennbar 'aussteigen'; dative 'an der'.", keywords: ["aussteigen", "Haltestelle"] },
+          { english: "My car is broken. I must go to the garage.", german: "Mein Auto ist kaputt. Ich muss in die Werkstatt.", note: "'kaputt' = broken; 'Werkstatt' = garage/workshop.", keywords: ["Auto", "Werkstatt"] },
+          { english: "How long does it take to get to the airport? About thirty minutes.", german: "Wie lange dauert es bis zum Flughafen? Etwa dreißig Minuten.", note: "'bis zum' = up to/until; 'etwa' = about.", keywords: ["Flughafen", "dauern"] },
+          { english: "I always fasten my seatbelt. It is important.", german: "Ich lege immer den Sicherheitsgurt an. Das ist wichtig.", note: "Trennbar 'anlegen'; 'wichtig' = important.", keywords: ["Sicherheitsgurt", "anlegen"] },
+        ],
+      },
+      {
+        id: "t-a1-health",
+        title: "Health & Body",
+        sentences: [
+          { english: "I have a headache. I need a tablet.", german: "Ich habe Kopfschmerzen. Ich brauche eine Tablette.", note: "'Kopfschmerzen' always plural in German.", keywords: ["Kopfschmerzen", "Tablette"] },
+          { english: "I am cold. I think I have a fever.", german: "Mir ist kalt. Ich glaube, ich habe Fieber.", note: "Dative 'mir ist kalt'; 'Fieber haben' no article.", keywords: ["kalt", "Fieber"] },
+          { english: "I go to the doctor. I have an appointment at two.", german: "Ich gehe zum Arzt. Ich habe einen Termin um zwei.", note: "'zum Arzt gehen' fixed phrase.", keywords: ["Arzt", "Termin"] },
+          { english: "My arm hurts. I cannot lift anything heavy.", german: "Mein Arm tut weh. Ich kann nichts Schweres heben.", note: "'wehtun' = to hurt; 'nichts Schweres' = nothing heavy.", keywords: ["wehtun", "heben"] },
+          { english: "I drink a lot of water every day. That is healthy.", german: "Ich trinke jeden Tag viel Wasser. Das ist gesund.", note: "Accusative 'jeden Tag'.", keywords: ["Wasser", "gesund"] },
+          { english: "I sleep badly at the moment. I am very tired.", german: "Ich schlafe gerade schlecht. Ich bin sehr müde.", note: "'gerade' = at the moment.", keywords: ["schlafen", "müde"] },
+          { english: "The pharmacy is open. I can buy medicine there.", german: "Die Apotheke ist geöffnet. Ich kann dort Medikamente kaufen.", note: "'geöffnet' = open (adj.); 'Medikamente' plural.", keywords: ["Apotheke", "Medikamente"] },
+          { english: "I do sport twice a week. It keeps me fit.", german: "Ich treibe zweimal pro Woche Sport. Das hält mich fit.", note: "'Sport treiben' fixed phrase; 'halten' = to keep.", keywords: ["Sport", "treiben"] },
+          { english: "My stomach hurts after eating. Maybe the food was bad.", german: "Mein Bauch tut nach dem Essen weh. Vielleicht war das Essen schlecht.", note: "'nach dem Essen' dative; 'vielleicht' = maybe.", keywords: ["Bauch", "vielleicht"] },
+          { english: "I feel better today. I do not need medicine anymore.", german: "Mir geht es heute besser. Ich brauche keine Medikamente mehr.", note: "'es geht mir besser' = I feel better; 'keine … mehr'.", keywords: ["besser", "Medikamente"] },
+        ],
+      },
+
+    
   ],
 
   A2: [
