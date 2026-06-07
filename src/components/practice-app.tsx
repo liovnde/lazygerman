@@ -24,6 +24,8 @@ const MODES: { id: PracticeMode; label: string; icon: typeof BookOpen; descripti
   { id: "exam", label: "Exam Preparation", icon: GraduationCap, description: "Goethe / telc style" },
 ];
 
+type PromptLang = "en" | "vi";
+
 export function PracticeApp() {
   const { theme, toggle } = useTheme();
   const [mode, setMode] = useState<PracticeMode>("translation");
@@ -32,6 +34,7 @@ export function PracticeApp() {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
+  const [promptLang, setPromptLang] = useState<PromptLang>("en");
 
   // Ensure topic stays valid if mode/level change externally
   useEffect(() => {
@@ -229,12 +232,45 @@ export function PracticeApp() {
             <Card className="overflow-hidden border-border/70 shadow-sm">
               <CardContent className="space-y-6 p-6 sm:p-8">
                 <div className="space-y-2">
-                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Translate to German
-                  </p>
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Translate to German
+                    </p>
+                    <div className="inline-flex rounded-full border border-border bg-card p-0.5 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => setPromptLang("en")}
+                        className={cn(
+                          "rounded-full px-2.5 py-1 font-medium transition-colors",
+                          promptLang === "en"
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        EN
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPromptLang("vi")}
+                        disabled={!current.vietnamese}
+                        className={cn(
+                          "rounded-full px-2.5 py-1 font-medium transition-colors",
+                          promptLang === "vi"
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:text-foreground",
+                          !current.vietnamese && "opacity-40 cursor-not-allowed",
+                        )}
+                      >
+                        VI
+                      </button>
+                    </div>
+                  </div>
                   <p className="text-balance text-2xl font-medium leading-snug sm:text-3xl">
-                    {current.english}
+                    {promptLang === "vi" && current.vietnamese ? current.vietnamese : current.english}
                   </p>
+                  {promptLang === "vi" && current.vietnamese && (
+                    <p className="text-sm text-muted-foreground italic">{current.english}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
