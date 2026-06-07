@@ -122,8 +122,25 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-screen flex-col">
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <footer className="mt-auto border-t border-border bg-muted px-6 py-8 text-center text-sm text-muted-foreground">
+          <p className="mx-auto max-w-2xl leading-relaxed">
+            Free web app, no BS. It's 2026 — education shouldn't be locked behind some paywall.
+            If this helps or you wanna support new stuff,{" "}
+            <a
+              href="https://paypal.me/tnblio0612"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-primary underline underline-offset-2 hover:text-primary/80"
+            >
+              buy me a coffee via PayPal
+            </a>
+            . And hey, good luck on your way to Germany — hope it all goes smoothly and you make it!
+          </p>
+        </footer>
+      </div>
     </QueryClientProvider>
   );
 }
