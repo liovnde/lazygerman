@@ -6,6 +6,8 @@ export interface SentenceItem {
   english: string;
   /** German answer — always 2 sentences, matching the English. */
   german: string;
+  /** Vietnamese prompt — always 2 sentences, matching the English. */
+  vietnamese?: string;
   note: string;
   keywords?: string[];
 }
