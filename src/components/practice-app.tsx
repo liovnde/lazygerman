@@ -24,7 +24,7 @@ const MODES: { id: PracticeMode; label: string; icon: typeof BookOpen; descripti
   { id: "exam", label: "Exam Preparation", icon: GraduationCap, description: "Goethe / telc style" },
 ];
 
-type PromptLang = "en" | "vi";
+type PromptLang = "en" | "vi" | "es";
 
 export function PracticeApp() {
   const { theme, toggle } = useTheme();
@@ -237,40 +237,50 @@ export function PracticeApp() {
                       Translate to German
                     </p>
                     <div className="inline-flex rounded-full border border-border bg-card p-0.5 text-xs">
-                      <button
-                        type="button"
-                        onClick={() => setPromptLang("en")}
-                        className={cn(
-                          "rounded-full px-2.5 py-1 font-medium transition-colors",
-                          promptLang === "en"
-                            ? "bg-primary text-primary-foreground"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        EN
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setPromptLang("vi")}
-                        disabled={!current.vietnamese}
-                        className={cn(
-                          "rounded-full px-2.5 py-1 font-medium transition-colors",
-                          promptLang === "vi"
-                            ? "bg-primary text-primary-foreground"
-                            : "text-muted-foreground hover:text-foreground",
-                          !current.vietnamese && "opacity-40 cursor-not-allowed",
-                        )}
-                      >
-                        VI
-                      </button>
+                      {(
+                        [
+                          { id: "en" as const, label: "EN", available: true },
+                          { id: "vi" as const, label: "VI", available: !!current.vietnamese },
+                          { id: "es" as const, label: "ES", available: !!current.spanish },
+                        ]
+                      ).map((opt) => (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => opt.available && setPromptLang(opt.id)}
+                          disabled={!opt.available}
+                          className={cn(
+                            "rounded-full px-2.5 py-1 font-medium transition-colors",
+                            promptLang === opt.id
+                              ? "bg-primary text-primary-foreground"
+                              : "text-muted-foreground hover:text-foreground",
+                            !opt.available && "opacity-40 cursor-not-allowed",
+                          )}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <p className="text-balance text-2xl font-medium leading-snug sm:text-3xl">
-                    {promptLang === "vi" && current.vietnamese ? current.vietnamese : current.english}
-                  </p>
-                  {promptLang === "vi" && current.vietnamese && (
-                    <p className="text-sm text-muted-foreground italic">{current.english}</p>
-                  )}
+                  {(() => {
+                    const localized =
+                      promptLang === "vi"
+                        ? current.vietnamese
+                        : promptLang === "es"
+                          ? current.spanish
+                          : undefined;
+                    const display = localized ?? current.english;
+                    return (
+                      <>
+                        <p className="text-balance text-2xl font-medium leading-snug sm:text-3xl">
+                          {display}
+                        </p>
+                        {localized && (
+                          <p className="text-sm text-muted-foreground italic">{current.english}</p>
+                        )}
+                      </>
+                    );
+                  })()}
                 </div>
 
                 <div className="space-y-2">
