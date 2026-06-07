@@ -24,6 +24,8 @@ const MODES: { id: PracticeMode; label: string; icon: typeof BookOpen; descripti
   { id: "exam", label: "Exam Preparation", icon: GraduationCap, description: "Goethe / telc style" },
 ];
 
+type PromptLang = "en" | "vi";
+
 export function PracticeApp() {
   const { theme, toggle } = useTheme();
   const [mode, setMode] = useState<PracticeMode>("translation");
@@ -32,6 +34,7 @@ export function PracticeApp() {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
+  const [promptLang, setPromptLang] = useState<PromptLang>("en");
 
   // Ensure topic stays valid if mode/level change externally
   useEffect(() => {
