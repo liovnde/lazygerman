@@ -7,10 +7,16 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { PracticeSettingsProvider, usePracticeSettings } from "@/context/practice-settings";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "@/hooks/use-theme";
 
 function NotFoundComponent() {
   return (
@@ -91,9 +97,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f8b4c041-a02b-4b23-8fff-1ea0fce0ad04/id-preview-679602a1--7c60032d-7f0a-4fce-bd73-eb1726d13b0c.lovable.app-1780596832414.png" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap",
       },
     ],
   }),
@@ -117,30 +126,80 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const MODE_LABELS: Record<string, string> = {
+  translation: "Translation",
+  daily: "Daily Conversation",
+  exam: "Exam Preparation",
+};
+
+function TopBar() {
+  const { mode, level } = usePracticeSettings();
+  const { theme, toggle } = useTheme();
+  return (
+    <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border bg-background/85 px-4 backdrop-blur sm:px-6">
+      <SidebarTrigger className="-ml-1" />
+      <div className="h-5 w-px bg-border" />
+      <nav className="flex items-baseline gap-2 font-display text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+        <span>Satzwerk</span>
+        <span className="text-border">/</span>
+        <span className="text-foreground/80">{MODE_LABELS[mode]}</span>
+        <span className="text-border">/</span>
+        <span className="text-primary">{level}</span>
+      </nav>
+      <div className="ml-auto">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggle}
+          aria-label="Toggle theme"
+          className="h-8 w-8 rounded-full"
+        >
+          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </Button>
+      </div>
+    </header>
+  );
+}
+
+function AppShell() {
+  return (
+    <PracticeSettingsProvider>
+      <SidebarProvider>
+        <div className="flex min-h-screen w-full bg-background text-foreground">
+          <AppSidebar />
+          <div className="flex min-h-screen flex-1 flex-col">
+            <TopBar />
+            <main className="flex-1">
+              <Outlet />
+            </main>
+            <footer className="border-t border-border px-6 py-6 text-center text-xs leading-relaxed text-muted-foreground">
+              <p className="mx-auto max-w-2xl">
+                Free web app, no BS. It's 2026 — education shouldn't be locked behind a paywall.
+                If this helps,{" "}
+                <a
+                  href="https://paypal.me/tnblio0612"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+                >
+                  buy me a coffee via PayPal
+                </a>
+                . Good luck on your way to Germany — hope it all goes smoothly.
+              </p>
+            </footer>
+          </div>
+        </div>
+      </SidebarProvider>
+    </PracticeSettingsProvider>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <footer className="mt-auto border-t border-border bg-muted px-6 py-8 text-center text-sm text-muted-foreground">
-          <p className="mx-auto max-w-2xl leading-relaxed">
-            Free web app, no BS. It's 2026 — education shouldn't be locked behind some paywall.
-            If this helps or you wanna support new stuff,{" "}
-            <a
-              href="https://paypal.me/tnblio0612"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-primary underline underline-offset-2 hover:text-primary/80"
-            >
-              buy me a coffee via PayPal
-            </a>
-            . And hey, good luck on your way to Germany — hope it all goes smoothly and you make it!
-          </p>
-        </footer>
-      </div>
+      <AppShell />
     </QueryClientProvider>
   );
 }
