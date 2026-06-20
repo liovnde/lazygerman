@@ -8,6 +8,10 @@ import { modeSets, pickRandomTopic, type Topic } from "@/data/sentences";
 import { usePracticeSettings } from "@/context/practice-settings";
 import { useScrambleText } from "@/hooks/use-scramble-text";
 
+function ScrambleOnMount({ text }: { text: string }) {
+  return <>{useScrambleText(text)}</>;
+}
+
 type PromptLang = "en" | "vi" | "es";
 
 export function PracticeApp() {
