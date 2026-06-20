@@ -194,7 +194,7 @@ export function PracticeApp() {
 
       {/* Reveal */}
       {revealed && (
-        <div className="animate-in fade-in slide-in-from-bottom-2 space-y-5 border-l-2 border-primary pl-5">
+        <div className="space-y-5 border-l-2 border-primary pl-5">
           <div>
             <p className="font-display mb-1.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
               German
