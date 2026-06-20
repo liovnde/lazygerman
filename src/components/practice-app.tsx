@@ -8,8 +8,8 @@ import { modeSets, pickRandomTopic, type Topic } from "@/data/sentences";
 import { usePracticeSettings } from "@/context/practice-settings";
 import { useScrambleText } from "@/hooks/use-scramble-text";
 
-function ScrambleOnMount({ text }: { text: string }) {
-  return <>{useScrambleText(text)}</>;
+function RevealText({ text }: { text: string }) {
+  return <span className="animate-fade-in inline-block">{text}</span>;
 }
 
 type PromptLang = "en" | "vi" | "es";
