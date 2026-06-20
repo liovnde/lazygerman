@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { modeSets, pickRandomTopic, type Topic } from "@/data/sentences";
 import { usePracticeSettings } from "@/context/practice-settings";
+import { useScrambleText } from "@/hooks/use-scramble-text";
 
 type PromptLang = "en" | "vi" | "es";
 
