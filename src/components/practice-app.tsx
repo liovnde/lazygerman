@@ -200,7 +200,7 @@ export function PracticeApp() {
               German
             </p>
             <p className="font-display text-balance text-2xl font-medium leading-snug sm:text-3xl" style={{ fontVariantNumeric: "tabular-nums" }}>
-              <ScrambleOnMount text={current.german} />
+              <RevealText text={current.german} />
             </p>
           </div>
 
