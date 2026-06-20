@@ -130,8 +130,11 @@ export function PracticeApp() {
 
       {/* Prompt */}
       <div className="mb-10 space-y-3">
-        <h1 className="font-display text-balance text-3xl font-medium leading-[1.2] tracking-tight sm:text-4xl">
-          {display}
+        <h1
+          className="font-display text-balance text-3xl font-medium leading-[1.2] tracking-tight sm:text-4xl"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
+          {useScrambleText(display)}
         </h1>
         {localized && (
           <p className="text-sm italic text-muted-foreground">{current.english}</p>
