@@ -16,7 +16,16 @@ export function useScrambleText(
   opts: { duration?: number; tick?: number; chars?: string } = {},
 ): string {
   const { duration = 600, tick = 35, chars = DEFAULT_CHARS } = opts;
-  const [output, setOutput] = useState(target);
+  const [output, setOutput] = useState(() => {
+    if (typeof window === "undefined" || !target) return target;
+    return target
+      .split("")
+      .map((ch) => {
+        if (ch === " " || ch === "\n" || /[.,;:!?¿¡"'()\-—–]/.test(ch)) return ch;
+        return randChar(chars);
+      })
+      .join("");
+  });
   const rafRef = useRef<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
