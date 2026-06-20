@@ -6,6 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { modeSets, pickRandomTopic, type Topic } from "@/data/sentences";
 import { usePracticeSettings } from "@/context/practice-settings";
+import { useScrambleText } from "@/hooks/use-scramble-text";
+
+function ScrambleOnMount({ text }: { text: string }) {
+  return <>{useScrambleText(text)}</>;
+}
 
 type PromptLang = "en" | "vi" | "es";
 
@@ -129,8 +134,11 @@ export function PracticeApp() {
 
       {/* Prompt */}
       <div className="mb-10 space-y-3">
-        <h1 className="font-display text-balance text-3xl font-medium leading-[1.2] tracking-tight sm:text-4xl">
-          {display}
+        <h1
+          className="font-display text-balance text-3xl font-medium leading-[1.2] tracking-tight sm:text-4xl"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
+          {useScrambleText(display)}
         </h1>
         {localized && (
           <p className="text-sm italic text-muted-foreground">{current.english}</p>
@@ -191,8 +199,8 @@ export function PracticeApp() {
             <p className="font-display mb-1.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
               German
             </p>
-            <p className="font-display text-balance text-2xl font-medium leading-snug sm:text-3xl">
-              {current.german}
+            <p className="font-display text-balance text-2xl font-medium leading-snug sm:text-3xl" style={{ fontVariantNumeric: "tabular-nums" }}>
+              <ScrambleOnMount text={current.german} />
             </p>
           </div>
 
