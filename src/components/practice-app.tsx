@@ -8,8 +8,8 @@ import { modeSets, pickRandomTopic, type Topic } from "@/data/sentences";
 import { usePracticeSettings } from "@/context/practice-settings";
 import { useScrambleText } from "@/hooks/use-scramble-text";
 
-function ScrambleOnMount({ text }: { text: string }) {
-  return <>{useScrambleText(text)}</>;
+function RevealText({ text }: { text: string }) {
+  return <span className="animate-fade-in inline-block">{text}</span>;
 }
 
 type PromptLang = "en" | "vi" | "es";
@@ -200,7 +200,7 @@ export function PracticeApp() {
               German
             </p>
             <p className="font-display text-balance text-2xl font-medium leading-snug sm:text-3xl" style={{ fontVariantNumeric: "tabular-nums" }}>
-              <ScrambleOnMount text={current.german} />
+              <RevealText text={current.german} />
             </p>
           </div>
 
